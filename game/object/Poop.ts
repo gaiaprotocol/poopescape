@@ -1,10 +1,10 @@
-import { IntegerUtil } from "@common-module/app";
+import { IntegerUtil, Sound } from "@common-module/app";
 import { ColliderType, Image, Movable, StateSet } from "@gaiaengine/gaiaengine";
 
 export default class Poop extends Movable {
   private stateSet: StateSet;
 
-  constructor(onDropped: () => void) {
+  constructor(onDroppedToGround: () => void) {
     super(IntegerUtil.random(-180, 180), -320);
     this.accelY = 1000;
     this.maxY = 235;
@@ -24,11 +24,13 @@ export default class Poop extends Movable {
 
     this.onMaxYReached = () => {
       this.dropped();
-      onDropped();
+      onDroppedToGround();
     };
   }
 
   public dropped() {
+    new Sound({ wav: `assets/poop/drop${IntegerUtil.random(1, 3)}.wav` })
+      .play();
     this.stateSet.state = "dropped";
   }
 }

@@ -1,4 +1,4 @@
-import { ArrayUtil } from "@common-module/app";
+import { ArrayUtil, Sound } from "@common-module/app";
 import {
   Background,
   CollisionChecker,
@@ -76,6 +76,8 @@ export default class Stage extends WindowEventNode {
         this.gameOver();
       },
     ).appendTo(this);
+
+    new Sound({ wav: "assets/start-game.wav" }).play();
   }
 
   private createPoop() {
@@ -116,5 +118,7 @@ export default class Stage extends WindowEventNode {
         },
       }),
     );
+
+    new Sound({ wav: "assets/game-over.wav" }).play();
   }
 }
