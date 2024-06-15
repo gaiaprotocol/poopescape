@@ -36,7 +36,6 @@ export default class Stage extends WindowEventNode {
     );
 
     this.onWindow("touchstart", (event: TouchEvent) => {
-      event.preventDefault();
       if (event.touches[0].clientX < window.innerWidth / 2) {
         this.hero.moveLeft();
       } else this.hero.moveRight();
