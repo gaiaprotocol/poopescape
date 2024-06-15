@@ -18,8 +18,8 @@ export default class Poop extends Movable {
     });
 
     this.stateSet = new StateSet(this, {
-      falling: new Image(0, 0, "assets/poop/poop.png"),
-      dropped: new Image(0, 0, "assets/poop/dropped.png"),
+      falling: new Image(0, 0, "/assets/poop/poop.png"),
+      dropped: new Image(0, 0, "/assets/poop/dropped.png"),
     }, "falling");
 
     this.onMaxYReached = () => {

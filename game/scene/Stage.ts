@@ -27,7 +27,7 @@ export default class Stage extends WindowEventNode {
     super(0, 0);
 
     this.append(
-      new Background("assets/background.png"),
+      new Background("/assets/background.png"),
       this.pointDisplay = new Text(0, -290, "Point: 0", {
         fontSize: 25,
         color: "#000",
@@ -36,6 +36,7 @@ export default class Stage extends WindowEventNode {
     );
 
     this.onWindow("touchstart", (event: TouchEvent) => {
+      event.preventDefault();
       if (event.touches[0].clientX < window.innerWidth / 2) {
         this.hero.moveLeft();
       } else this.hero.moveRight();
@@ -77,7 +78,7 @@ export default class Stage extends WindowEventNode {
       },
     ).appendTo(this);
 
-    new Sound({ wav: "assets/start-game.wav" }).play();
+    new Sound({ wav: "/assets/start-game.wav" }).play();
   }
 
   private createPoop() {
@@ -119,6 +120,6 @@ export default class Stage extends WindowEventNode {
       }),
     );
 
-    new Sound({ wav: "assets/game-over.wav" }).play();
+    new Sound({ wav: "/assets/game-over.wav" }).play();
   }
 }

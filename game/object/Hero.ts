@@ -24,9 +24,9 @@ export default class Hero extends Movable {
     });
 
     this.stateSet = new StateSet(this, {
-      idle: new Image(0, 0, "assets/hero/idle.png"),
-      run: new Sprite(0, 0, "assets/hero/run.png", 6, 10),
-      dead: new Image(0, 40, "assets/hero/dead.png"),
+      idle: new Image(0, 0, "/assets/hero/idle.png"),
+      run: new Sprite(0, 0, "/assets/hero/run.png", 6, 10),
+      dead: new Image(0, 40, "/assets/hero/dead.png"),
     }, "idle");
   }
 
