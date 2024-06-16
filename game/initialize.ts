@@ -11,8 +11,4 @@ export default async function initialize(devMode: boolean) {
     devMode ? new FpsDisplay() : undefined,
   );
   //new LetterboxedScreen(360, 640, new Stage());
-
-  document.addEventListener("contextmenu", function (event) {
-    event.preventDefault();
-  });
 }

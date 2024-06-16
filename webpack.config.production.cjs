@@ -67,6 +67,10 @@ module.exports = {
             buffer: require.resolve("buffer/"),
             'process/browser': require.resolve('process/browser')
         },
+        modules: [
+            path.resolve(__dirname, 'node_modules'),
+            'node_modules'
+        ],
     },
     output: {
         filename: '[name].js',

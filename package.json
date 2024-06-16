@@ -7,7 +7,7 @@
   },
   "type": "module",
   "dependencies": {
-    "@gaiaengine/gaiaengine": "^0.0.1"
+    "@gaiaengine/2d": "^0.0.2"
   },
   "devDependencies": {
     "assert": "^2.0.0",
