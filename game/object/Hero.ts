@@ -4,7 +4,7 @@ import {
   Movable,
   Sprite,
   StateSet,
-} from "@gaiaengine/gaiaengine";
+} from "@gaiaengine/2d";
 
 export default class Hero extends Movable {
   private stateSet: StateSet;

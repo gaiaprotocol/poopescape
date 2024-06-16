@@ -1,5 +1,5 @@
 import { IntegerUtil, Sound } from "@common-module/app";
-import { ColliderType, Image, Movable, StateSet } from "@gaiaengine/gaiaengine";
+import { ColliderType, Image, Movable, StateSet } from "@gaiaengine/2d";
 
 export default class Poop extends Movable {
   private stateSet: StateSet;

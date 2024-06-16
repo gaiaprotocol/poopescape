@@ -1,5 +1,5 @@
 import { Bgm } from "@common-module/app";
-import { Background, Dom, Node, Text } from "@gaiaengine/gaiaengine";
+import { Background, Dom, Node, Text } from "@gaiaengine/2d";
 import Stage from "./Stage.js";
 
 export default class Main extends Node {

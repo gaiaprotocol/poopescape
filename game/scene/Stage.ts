@@ -6,7 +6,7 @@ import {
   Interval,
   Text,
   WindowEventNode,
-} from "@gaiaengine/gaiaengine";
+} from "@gaiaengine/2d";
 import Hero from "../object/Hero.js";
 import Poop from "../object/Poop.js";
 
