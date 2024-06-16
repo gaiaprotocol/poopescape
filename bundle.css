@@ -1359,4 +1359,7 @@ button.component.disabled {
   max-width: 100%;
   border-radius: 8px;
 }
+body {
+  user-select: none;
+}
 
