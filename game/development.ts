@@ -1,2 +1,4 @@
 import initialize from "./initialize.js";
-await initialize(true);
+await initialize({
+  dev: true,
+});

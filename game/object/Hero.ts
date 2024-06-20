@@ -1,10 +1,4 @@
-import {
-  ColliderType,
-  Image,
-  Movable,
-  Sprite,
-  StateSet,
-} from "@gaiaengine/2d";
+import { ColliderType, Image, Movable, Sprite, StateSet } from "@gaiaengine/2d";
 
 export default class Hero extends Movable {
   private stateSet: StateSet;

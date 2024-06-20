@@ -2,6 +2,7 @@
   "scripts": {
     "webpack-dev": "webpack --mode development --watch --config webpack.config.development.cjs",
     "webpack-prod": "webpack --mode production --config webpack.config.production.cjs",
+    "webpack-app": "webpack --mode production --config webpack.config.app.cjs",
     "predeploy": "yarn webpack-prod",
     "deploy": "gh-pages -d public"
   },
