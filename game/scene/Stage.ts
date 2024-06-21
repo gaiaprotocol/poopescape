@@ -168,5 +168,9 @@ export default class Stage extends WindowEventNode {
     );
 
     new Sound({ wav: "/assets/game-over.wav" }).play();
+
+    if ((window as any).messageHandler) {
+      (window as any).messageHandler.postMessage("showAd");
+    }
   }
 }
