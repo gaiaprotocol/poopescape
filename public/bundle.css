@@ -1366,5 +1366,7 @@ button.component.disabled {
 body {
   user-select: none;
   -webkit-user-select: none;
+  touch-callout: none;
+  -webkit-touch-callout: none;
 }
 

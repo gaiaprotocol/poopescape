@@ -23,6 +23,9 @@ export default class Stage extends WindowEventNode {
   private period = 5;
   private collisionChecker: CollisionChecker<Poop>;
 
+  private leftTouchActive = false;
+  private rightTouchActive = false;
+
   constructor() {
     super(0, 0);
 
@@ -35,29 +38,8 @@ export default class Stage extends WindowEventNode {
       this.hero = new Hero(0, 200),
     );
 
-    this.onWindow("touchstart", (event: TouchEvent) => {
-      if (event.touches[0].clientX < window.innerWidth / 2) {
-        this.hero.moveLeft();
-      } else this.hero.moveRight();
-    });
-
-    this.onWindow("touchmove", (event: TouchEvent) => {
-      if (event.touches[0].clientX < window.innerWidth / 2) {
-        this.hero.moveLeft();
-      } else this.hero.moveRight();
-    });
-
-    this.onWindow("touchend", () => this.hero.stop());
-
-    this.onWindow("keydown", (event: KeyboardEvent) => {
-      if (event.key === "ArrowLeft") this.hero.moveLeft();
-      else if (event.key === "ArrowRight") this.hero.moveRight();
-    });
-
-    this.onWindow("keyup", (event: KeyboardEvent) => {
-      if (event.key === "ArrowLeft") this.hero.stopLeft();
-      if (event.key === "ArrowRight") this.hero.stopRight();
-    });
+    this.setupTouchEvents();
+    this.setupKeyboardEvents();
 
     this.interval = new Interval(0.1, () => {
       if (this.intervalCount % this.period === 0) this.createPoop();
@@ -78,6 +60,72 @@ export default class Stage extends WindowEventNode {
     ).appendTo(this);
 
     new Sound({ wav: "/assets/start-game.wav" }).play();
+  }
+
+  private setupTouchEvents() {
+    this.onWindow("touchstart", (event: TouchEvent) => {
+      Array.from(event.touches).forEach((touch) => {
+        if (touch.clientX < window.innerWidth / 2) {
+          this.leftTouchActive = true;
+        } else {
+          this.rightTouchActive = true;
+        }
+      });
+      this.updateHeroMovement();
+    });
+
+    this.onWindow("touchmove", (event: TouchEvent) => {
+      this.leftTouchActive = false;
+      this.rightTouchActive = false;
+      Array.from(event.touches).forEach((touch) => {
+        if (touch.clientX < window.innerWidth / 2) {
+          this.leftTouchActive = true;
+        } else {
+          this.rightTouchActive = true;
+        }
+      });
+      this.updateHeroMovement();
+    });
+
+    this.onWindow("touchend", (event: TouchEvent) => {
+      if (event.touches.length === 0) {
+        this.leftTouchActive = false;
+        this.rightTouchActive = false;
+      } else {
+        this.leftTouchActive = false;
+        this.rightTouchActive = false;
+        Array.from(event.touches).forEach((touch) => {
+          if (touch.clientX < window.innerWidth / 2) {
+            this.leftTouchActive = true;
+          } else {
+            this.rightTouchActive = true;
+          }
+        });
+      }
+      this.updateHeroMovement();
+    });
+  }
+
+  private updateHeroMovement() {
+    if (this.leftTouchActive && !this.rightTouchActive) {
+      this.hero.moveLeft();
+    } else if (this.rightTouchActive && !this.leftTouchActive) {
+      this.hero.moveRight();
+    } else {
+      this.hero.stop();
+    }
+  }
+
+  private setupKeyboardEvents() {
+    this.onWindow("keydown", (event: KeyboardEvent) => {
+      if (event.key === "ArrowLeft") this.hero.moveLeft();
+      else if (event.key === "ArrowRight") this.hero.moveRight();
+    });
+
+    this.onWindow("keyup", (event: KeyboardEvent) => {
+      if (event.key === "ArrowLeft") this.hero.stopLeft();
+      if (event.key === "ArrowRight") this.hero.stopRight();
+    });
   }
 
   private createPoop() {
