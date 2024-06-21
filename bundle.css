@@ -1365,5 +1365,6 @@ button.component.disabled {
 }
 body {
   user-select: none;
+  -webkit-user-select: none;
 }
 
