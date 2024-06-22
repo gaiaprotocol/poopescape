@@ -1,5 +1,6 @@
 import { Bgm } from "@common-module/app";
 import { Background, Dom, Node, Text } from "@gaiaengine/2d";
+import Env from "../Env.js";
 import Stage from "./Stage.js";
 
 export default class Main extends Node {
@@ -10,15 +11,17 @@ export default class Main extends Node {
     this.append(
       new Background("/assets/background.png", { scrollSpeedX: -100 }),
       new Text(0, -200, "Poop Escape", { fontSize: 48, color: "#000" }),
-      new Text(0, -120, "Made with Gaia Engine", {
-        fontSize: 24,
-        color: "#000",
-      }),
+      !Env.isApp
+        ? new Text(0, -120, "Made with Gaia Engine", {
+          fontSize: 24,
+          color: "#000",
+        })
+        : undefined,
       new Dom(0, 110, "a", "Start", {
         style: {
           border: "1px solid white",
           backgroundColor: "#333",
-          padding: "10px 20px",
+          padding: "14px 36px",
           borderRadius: "5px",
           fontSize: "24px",
         },
@@ -27,6 +30,23 @@ export default class Main extends Node {
           this.delete();
         },
       }),
+      Env.isApp
+        ? new Dom(0, 200, "a", "Leaderboard", {
+          style: {
+            border: "1px solid white",
+            backgroundColor: "#333",
+            padding: "10px 20px",
+            borderRadius: "22px",
+          },
+          click: () => {
+            if ((window as any).messageHandler) {
+              (window as any).messageHandler.postMessage(
+                JSON.stringify({ method: "showLeaderboard" }),
+              );
+            }
+          },
+        })
+        : undefined,
     );
   }
 

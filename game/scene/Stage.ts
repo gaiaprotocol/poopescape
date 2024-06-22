@@ -1,14 +1,16 @@
-import { ArrayUtil, Sound } from "@common-module/app";
+import { ArrayUtil, BrowserInfo, Sound } from "@common-module/app";
 import {
   Background,
   CollisionChecker,
   Dom,
+  Image,
   Interval,
   Text,
   WindowEventNode,
 } from "@gaiaengine/2d";
 import Hero from "../object/Hero.js";
 import Poop from "../object/Poop.js";
+import Env from "../Env.js";
 
 export default class Stage extends WindowEventNode {
   private point = 0;
@@ -17,6 +19,8 @@ export default class Stage extends WindowEventNode {
   private pointDisplay: Text;
   private hero: Hero;
   private fallingPoops: Poop[] = [];
+  private leftArrow: Image | undefined;
+  private rightArrow: Image | undefined;
 
   private interval: Interval;
   private intervalCount = 0;
@@ -25,6 +29,8 @@ export default class Stage extends WindowEventNode {
 
   private leftTouchActive = false;
   private rightTouchActive = false;
+
+  private gameOverCount = 0;
 
   constructor() {
     super(0, 0);
@@ -36,7 +42,23 @@ export default class Stage extends WindowEventNode {
         color: "#000",
       }),
       this.hero = new Hero(0, 200),
+      ...(BrowserInfo.isMobileDevice
+        ? [
+          this.leftArrow = new Image(-100, 250, "/assets/arrow.png"),
+          this.rightArrow = new Image(100, 250, "/assets/arrow.png"),
+        ]
+        : []),
     );
+
+    if (this.leftArrow) {
+      this.leftArrow.alpha = 0.2;
+      this.leftArrow.scale = 0.5;
+      this.leftArrow.rotation = Math.PI;
+    }
+    if (this.rightArrow) {
+      this.rightArrow.alpha = 0.2;
+      this.rightArrow.scale = 0.5;
+    }
 
     this.setupTouchEvents();
     this.setupKeyboardEvents();
@@ -156,7 +178,7 @@ export default class Stage extends WindowEventNode {
         style: {
           border: "1px solid white",
           backgroundColor: "#333",
-          padding: "10px 20px",
+          padding: "14px 36px",
           borderRadius: "5px",
           fontSize: "24px",
         },
@@ -165,12 +187,38 @@ export default class Stage extends WindowEventNode {
           this.delete();
         },
       }),
+      Env.isApp
+        ? new Dom(0, 200, "a", "Leaderboard", {
+          style: {
+            border: "1px solid white",
+            backgroundColor: "#333",
+            padding: "10px 20px",
+            borderRadius: "22px",
+          },
+          click: () => {
+            if ((window as any).messageHandler) {
+              (window as any).messageHandler.postMessage(
+                JSON.stringify({ method: "showLeaderboard" }),
+              );
+            }
+          },
+        })
+        : undefined,
     );
 
     new Sound({ wav: "/assets/game-over.wav" }).play();
 
+    this.gameOverCount += 1;
+    if (this.gameOverCount % 3 === 0 && (window as any).messageHandler) {
+      (window as any).messageHandler.postMessage(
+        JSON.stringify({ method: "showAd" }),
+      );
+    }
+
     if ((window as any).messageHandler) {
-      (window as any).messageHandler.postMessage("showAd");
+      (window as any).messageHandler.postMessage(
+        JSON.stringify({ method: "submitScore", score: this.point }),
+      );
     }
   }
 }
