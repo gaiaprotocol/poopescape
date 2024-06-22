@@ -12,6 +12,8 @@ import Hero from "../object/Hero.js";
 import Poop from "../object/Poop.js";
 import Env from "../Env.js";
 
+let gameOverCount = 0;
+
 export default class Stage extends WindowEventNode {
   private point = 0;
   private isGameOver = false;
@@ -29,8 +31,6 @@ export default class Stage extends WindowEventNode {
 
   private leftTouchActive = false;
   private rightTouchActive = false;
-
-  private gameOverCount = 0;
 
   constructor() {
     super(0, 0);
@@ -208,8 +208,8 @@ export default class Stage extends WindowEventNode {
 
     new Sound({ wav: "/assets/game-over.wav" }).play();
 
-    this.gameOverCount += 1;
-    if (this.gameOverCount % 3 === 0 && (window as any).messageHandler) {
+    gameOverCount += 1;
+    if (gameOverCount % 3 === 0 && (window as any).messageHandler) {
       (window as any).messageHandler.postMessage(
         JSON.stringify({ method: "showAd" }),
       );

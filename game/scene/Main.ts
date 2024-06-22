@@ -51,7 +51,7 @@ export default class Main extends Node {
   }
 
   public delete(): void {
-    this.bgm.stop();
+    this.bgm.delete();
     super.delete();
   }
 }
