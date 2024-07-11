@@ -1,5 +1,6 @@
 import {
   ArrayUtil,
+  Bgm,
   BrowserInfo,
   Button,
   ButtonType,
@@ -14,14 +15,16 @@ import {
   Text,
   WindowEventNode,
 } from "@gaiaengine/2d";
+import SettingsPopup from "../component/SettingsPopup.js";
 import Env from "../Env.js";
 import Hero from "../object/Hero.js";
 import Poop from "../object/Poop.js";
-import SettingsPopup from "../component/SettingsPopup.js";
 
 let gameOverCount = 0;
 
 export default class Stage extends WindowEventNode {
+  private bgm = new Bgm({ mp3: "/assets/main-bgm.mp3" });
+
   private point = 0;
   private isGameOver = false;
 
@@ -252,6 +255,7 @@ export default class Stage extends WindowEventNode {
     );
 
     new Sound({ wav: "/assets/game-over.wav" }).play();
+    this.bgm.play();
 
     gameOverCount += 1;
     if (gameOverCount % 2 === 0 && (window as any).messageHandler) {
@@ -271,5 +275,10 @@ export default class Stage extends WindowEventNode {
         JSON.stringify({ method: "showBannerAd" }),
       );
     }
+  }
+
+  public delete(): void {
+    this.bgm.delete();
+    super.delete();
   }
 }

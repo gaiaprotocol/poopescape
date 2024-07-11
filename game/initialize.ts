@@ -15,6 +15,7 @@ export default async function initialize(config: Config) {
     640,
     new Main(),
     config.dev ? new FpsDisplay() : undefined,
+    { dev: config.dev },
   );
   //new LetterboxedScreen(360, 640, new Stage());
 

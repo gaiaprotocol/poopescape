@@ -59,6 +59,12 @@ export default class Main extends Node {
         })
         : undefined,
     );
+
+    if ((window as any).messageHandler) {
+      (window as any).messageHandler.postMessage(
+        JSON.stringify({ method: "showBannerAd" }),
+      );
+    }
   }
 
   public delete(): void {
