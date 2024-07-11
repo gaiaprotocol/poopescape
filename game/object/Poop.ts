@@ -1,5 +1,5 @@
 import { IntegerUtil, Sound } from "@common-module/app";
-import { ColliderType, Image, Movable, StateSet } from "@gaiaengine/2d";
+import { ColliderType, Movable, Sprite, StateSet } from "@gaiaengine/2d";
 
 export default class Poop extends Movable {
   private stateSet: StateSet;
@@ -18,8 +18,8 @@ export default class Poop extends Movable {
     });
 
     this.stateSet = new StateSet(this, {
-      falling: new Image(0, 0, "/assets/poop/poop.png"),
-      dropped: new Image(0, 0, "/assets/poop/dropped.png"),
+      falling: new Sprite(0, 0, "/assets/poop/poop.png"),
+      dropped: new Sprite(0, 0, "/assets/poop/dropped.png"),
     }, "falling");
 
     this.onMaxYReached = () => {

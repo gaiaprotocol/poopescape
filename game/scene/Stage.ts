@@ -1,16 +1,23 @@
-import { ArrayUtil, BrowserInfo, Sound } from "@common-module/app";
+import {
+  ArrayUtil,
+  BrowserInfo,
+  Button,
+  ButtonType,
+  MaterialIcon,
+  Sound,
+} from "@common-module/app";
 import {
   Background,
   CollisionChecker,
   Dom,
-  Image,
-  Interval,
+  Sprite,
   Text,
   WindowEventNode,
 } from "@gaiaengine/2d";
+import Env from "../Env.js";
 import Hero from "../object/Hero.js";
 import Poop from "../object/Poop.js";
-import Env from "../Env.js";
+import SettingsPopup from "../component/SettingsPopup.js";
 
 let gameOverCount = 0;
 
@@ -21,12 +28,15 @@ export default class Stage extends WindowEventNode {
   private pointDisplay: Text;
   private hero: Hero;
   private fallingPoops: Poop[] = [];
-  private leftArrow: Image | undefined;
-  private rightArrow: Image | undefined;
+  private leftArrow: Sprite | undefined;
+  private rightArrow: Sprite | undefined;
 
+  /*
   private interval: Interval;
   private intervalCount = 0;
   private period = 5;
+  */
+
   private collisionChecker: CollisionChecker<Poop>;
 
   private leftTouchActive = false;
@@ -44,8 +54,8 @@ export default class Stage extends WindowEventNode {
       this.hero = new Hero(0, 200),
       ...(BrowserInfo.isMobileDevice
         ? [
-          this.leftArrow = new Image(-100, 250, "/assets/arrow.png"),
-          this.rightArrow = new Image(100, 250, "/assets/arrow.png"),
+          this.leftArrow = new Sprite(-100, 250, "/assets/arrow.png"),
+          this.rightArrow = new Sprite(100, 250, "/assets/arrow.png"),
         ]
         : []),
     );
@@ -63,6 +73,7 @@ export default class Stage extends WindowEventNode {
     this.setupTouchEvents();
     this.setupKeyboardEvents();
 
+    /*
     this.interval = new Interval(0.1, () => {
       if (this.intervalCount % this.period === 0) this.createPoop();
       if (this.period > 1 && this.intervalCount % 100 === 0) {
@@ -71,6 +82,7 @@ export default class Stage extends WindowEventNode {
       }
       this.intervalCount += 1;
     }).appendTo(this);
+    */
 
     this.collisionChecker = new CollisionChecker<Poop>(
       this.hero,
@@ -82,6 +94,12 @@ export default class Stage extends WindowEventNode {
     ).appendTo(this);
 
     new Sound({ wav: "/assets/start-game.wav" }).play();
+
+    if ((window as any).messageHandler) {
+      (window as any).messageHandler.postMessage(
+        JSON.stringify({ method: "hideBannerAd" }),
+      );
+    }
   }
 
   private setupTouchEvents() {
@@ -163,9 +181,24 @@ export default class Stage extends WindowEventNode {
     this.pointDisplay.text = `Point: ${this.point}`;
   }
 
+  private timeElapsed = 0;
+  private poopSpawnInterval = 0.35;
+
+  protected update(deltaTime: number): void {
+    super.update(deltaTime);
+    if (this.isGameOver) return;
+
+    this.timeElapsed += deltaTime;
+    if (this.timeElapsed >= this.poopSpawnInterval) {
+      this.createPoop();
+      this.timeElapsed = 0;
+      if (this.poopSpawnInterval > 0.1) this.poopSpawnInterval -= 0.001;
+    }
+  }
+
   private gameOver() {
     this.hero.dead();
-    this.interval.delete();
+    //this.interval.delete();
     this.collisionChecker.delete();
     this.isGameOver = true;
 
@@ -188,6 +221,18 @@ export default class Stage extends WindowEventNode {
         },
       }),
       Env.isApp
+        ? new Dom(
+          136,
+          -284,
+          ".settings-button-container",
+          new Button({
+            type: ButtonType.Contained,
+            icon: new MaterialIcon("settings"),
+            click: () => new SettingsPopup(),
+          }),
+        )
+        : undefined,
+      Env.isApp
         ? new Dom(0, 200, "a", "Leaderboard", {
           style: {
             border: "1px solid white",
@@ -209,15 +254,21 @@ export default class Stage extends WindowEventNode {
     new Sound({ wav: "/assets/game-over.wav" }).play();
 
     gameOverCount += 1;
-    if (gameOverCount % 3 === 0 && (window as any).messageHandler) {
+    if (gameOverCount % 2 === 0 && (window as any).messageHandler) {
       (window as any).messageHandler.postMessage(
-        JSON.stringify({ method: "showAd" }),
+        JSON.stringify({ method: "showInterstitialAd" }),
       );
     }
 
     if ((window as any).messageHandler) {
       (window as any).messageHandler.postMessage(
         JSON.stringify({ method: "submitScore", score: this.point }),
+      );
+    }
+
+    if ((window as any).messageHandler) {
+      (window as any).messageHandler.postMessage(
+        JSON.stringify({ method: "showBannerAd" }),
       );
     }
   }

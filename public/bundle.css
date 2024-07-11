@@ -1375,4 +1375,34 @@ body {
   touch-callout: none;
   -webkit-touch-callout: none;
 }
+.settings-popup {
+  max-width: 420px !important;
+}
+.settings-popup > header {
+  display: flex;
+  justify-content: space-between;
+}
+.settings-popup > header > h1 {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  font-size: 18px;
+  font-weight: var(--bold-weight);
+  text-transform: capitalize;
+}
+.settings-popup > main {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 10px 20px;
+}
+.settings-popup > main > button {
+  display: flex;
+  gap: 12px;
+  justify-content: flex-start;
+}
+.settings-popup > main > button > img {
+  height: 32px;
+  border-radius: 4px;
+}
 

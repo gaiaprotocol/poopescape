@@ -1,5 +1,6 @@
-import { Bgm } from "@common-module/app";
+import { Bgm, Button, ButtonType, MaterialIcon } from "@common-module/app";
 import { Background, Dom, Node, Text } from "@gaiaengine/2d";
+import SettingsPopup from "../component/SettingsPopup.js";
 import Env from "../Env.js";
 import Stage from "./Stage.js";
 
@@ -11,12 +12,10 @@ export default class Main extends Node {
     this.append(
       new Background("/assets/background.png", { scrollSpeedX: -100 }),
       new Text(0, -200, "Poop Escape", { fontSize: 48, color: "#000" }),
-      !Env.isApp
-        ? new Text(0, -120, "Made with Gaia Engine", {
-          fontSize: 24,
-          color: "#000",
-        })
-        : undefined,
+      new Text(0, -120, "Made with Gaia Engine", {
+        fontSize: 24,
+        color: "#000",
+      }),
       new Dom(0, 110, "a", "Start", {
         style: {
           border: "1px solid white",
@@ -30,6 +29,18 @@ export default class Main extends Node {
           this.delete();
         },
       }),
+      Env.isApp
+        ? new Dom(
+          136,
+          -284,
+          ".settings-button-container",
+          new Button({
+            type: ButtonType.Contained,
+            icon: new MaterialIcon("settings"),
+            click: () => new SettingsPopup(),
+          }),
+        )
+        : undefined,
       Env.isApp
         ? new Dom(0, 200, "a", "Leaderboard", {
           style: {
