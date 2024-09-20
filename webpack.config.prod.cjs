@@ -17,7 +17,7 @@ module.exports = {
         })],
     },
     entry: {
-        'bundle': './game/production.ts',
+        'bundle': './game/prod.ts',
         __less: './public/style/main.less',
     },
     module: {

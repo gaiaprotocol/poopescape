@@ -1,12 +1,11 @@
 import { AppInitializer, Store } from "@common-module/app";
 import { FpsDisplay, LetterboxedScreen } from "@gaiaengine/2d";
-import Config from "./Config.js";
 import Env from "./Env.js";
-import Main from "./scene/Main.js";
+import Main from "./scenes/Main.js";
 
-const removeAdsStore = new Store("removeAds");
+const removeAdsStore = new Store("remove-ads");
 
-export default async function initialize(config: Config) {
+export default async function init(config: { dev: boolean; isApp: boolean }) {
   Env.init(config);
   AppInitializer.initialize(true);
 

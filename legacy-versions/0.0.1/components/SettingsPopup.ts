@@ -1,14 +1,8 @@
-import {
-  Button,
-  ButtonType,
-  el,
-  MaterialIcon,
-  Popup,
-  Store,
-} from "@common-module/app";
+import { Button, ButtonType, el, Popup, Store } from "@common-module/app";
+import { MaterialIcon } from "@common-module/material-icons";
 
 export default class SettingsPopup extends Popup {
-  private removeAdsStore = new Store("removeAds");
+  private removeAdsStore = new Store("remove-ads");
 
   constructor() {
     super(".settings-popup", { barrierDismissible: true });

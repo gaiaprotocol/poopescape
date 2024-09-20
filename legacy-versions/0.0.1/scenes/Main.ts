@@ -1,6 +1,7 @@
-import { Bgm, Button, ButtonType, MaterialIcon } from "@common-module/app";
+import { Bgm, Button, ButtonType } from "@common-module/app";
+import { MaterialIcon } from "@common-module/material-icons";
 import { Background, Dom, Node, Text } from "@gaiaengine/2d";
-import SettingsPopup from "../component/SettingsPopup.js";
+import SettingsPopup from "../components/SettingsPopup.js";
 import Env from "../Env.js";
 import Stage from "./Stage.js";
 

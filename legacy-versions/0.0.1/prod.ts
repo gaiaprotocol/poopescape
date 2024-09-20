@@ -1,6 +1,6 @@
 import init from "./init.js";
 
 await init({
-  isDevMovde: false,
-  isRunningInApp: true,
+  dev: false,
+  isApp: false,
 });

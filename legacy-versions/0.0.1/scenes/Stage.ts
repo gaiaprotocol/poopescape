@@ -15,10 +15,10 @@ import {
   Text,
   WindowEventNode,
 } from "@gaiaengine/2d";
-import SettingsPopup from "../component/SettingsPopup.js";
+import SettingsPopup from "../components/SettingsPopup.js";
 import Env from "../Env.js";
-import Hero from "../object/Hero.js";
-import Poop from "../object/Poop.js";
+import Hero from "../objects/Hero.js";
+import Poop from "../objects/Poop.js";
 
 let gameOverCount = 0;
 

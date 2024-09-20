@@ -1,14 +1,18 @@
 {
   "scripts": {
-    "webpack-dev": "webpack --mode development --watch --config webpack.config.development.cjs",
-    "webpack-prod": "webpack --mode production --config webpack.config.production.cjs",
+    "webpack-dev": "webpack --mode development --watch --config webpack.config.dev.cjs",
+    "webpack-prod": "webpack --mode production --config webpack.config.prod.cjs",
     "webpack-app": "webpack --mode production --config webpack.config.app.cjs",
     "predeploy": "yarn webpack-prod",
     "deploy": "gh-pages -d public"
   },
   "type": "module",
   "dependencies": {
-    "@gaiaengine/2d": "^0.0.5"
+    "@common-module/app-components": "^0.0.1",
+    "@common-module/hybrid-bridge": "^0.0.1",
+    "@common-module/material-icons": "^0.0.1",
+    "@gaiaengine/2d": "^0.0.5",
+    "@gaiaengine/2d-joystick": "^0.0.1"
   },
   "devDependencies": {
     "assert": "^2.0.0",

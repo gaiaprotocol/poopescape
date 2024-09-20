@@ -76,5 +76,6 @@
     "typechain-types",
     "scripts",
     "service-worker",
+    "legacy-versions",
   ]
 }
