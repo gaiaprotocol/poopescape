@@ -11,22 +11,20 @@ export default async function init(config: IAppConfig) {
   SPAInitializer.init();
 
   new LetterboxedScreen(
-    360,
-    640,
+    { width: 360, height: 640 },
     new Main(),
-    config.isDevMovde ? new FPSDisplay() : undefined,
+    config.isDevMove ? new FPSDisplay() : undefined,
   );
 
   // for testing
   /*new LetterboxedScreen(
-    360,
-    640,
+    { width: 360, height: 640 },
     new Stage(),
-    config.isDevMovde ? new FPSDisplay() : undefined,
+    config.isDevMove ? new FPSDisplay() : undefined,
   );*/
 
   HybridAppBridge.registerGlobalFunction("removeAds", () => {
-    removeAdsStore.set("removed", true);
+    removeAdsStore.setPermanent("removed", true);
   });
 
   HybridAppBridge.registerGlobalFunction("setDeviceInfo", (
@@ -34,7 +32,7 @@ export default async function init(config: IAppConfig) {
     deviceInfo: any,
     adRemoved: boolean,
   ) => {
-    if (adRemoved) removeAdsStore.set("removed", true);
+    if (adRemoved) removeAdsStore.setPermanent("removed", true);
     fetch("https://jfjeaylmfzkteqwhalut.supabase.co/functions/v1/check", {
       method: "POST",
       body: JSON.stringify({

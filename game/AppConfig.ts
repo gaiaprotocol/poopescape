@@ -1,18 +1,18 @@
 import { GaiaEngineConfig } from "@gaiaengine/2d";
 
 export interface IAppConfig {
-  isDevMovde: boolean;
+  isDevMove: boolean;
   isRunningInApp: boolean;
 }
 
 class AppConfig implements IAppConfig {
-  public isDevMovde!: boolean;
+  public isDevMove!: boolean;
   public isRunningInApp!: boolean;
 
   public init(config: IAppConfig) {
     Object.assign(this, config);
 
-    GaiaEngineConfig.isDevMovde = config.isDevMovde;
+    GaiaEngineConfig.isDevMode = config.isDevMove;
   }
 }
 

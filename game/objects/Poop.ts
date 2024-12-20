@@ -32,7 +32,7 @@ export default class Poop extends Movable implements Collidable {
       dropped: new Sprite(0, 0, "/assets/poop/dropped.png"),
     }, "falling");
 
-    if (GaiaEngineConfig.isDevMovde) {
+    if (GaiaEngineConfig.isDevMode) {
       this.append(
         new EllipseNode(0, 0, 40, 40, undefined, { width: 2, color: 0xff0000 }),
       );

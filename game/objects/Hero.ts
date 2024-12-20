@@ -63,7 +63,7 @@ export default class Hero extends Movable implements Collidable {
       dead: new Sprite(0, 40, "/assets/hero/dead.png"),
     }, "idle");
 
-    if (GaiaEngineConfig.isDevMovde) {
+    if (GaiaEngineConfig.isDevMode) {
       this.append(
         new RectangleNode(0, 0, 20, 90, undefined, {
           width: 2,
